@@ -1,0 +1,6 @@
+== Fast Spork Runner
+
+Run rspec more faster.
+
+Inspired by @jugyo
+http://blog.twiwt.org/e/cafcfe
