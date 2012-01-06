@@ -17,8 +17,28 @@ rescue DRb::DRbConnError
   err.puts "No DRb server is running. Running in local process instead ..."
 end
 
+RSPEC_CONFIG_FILE = ".rspec"
+def config
+  if File.exist?(RSPEC_CONFIG_FILE)
+    result = []
+    open(RSPEC_CONFIG_FILE) do |f|
+      while line = f.gets
+        result << to_argument(line)
+      end
+    end
+    result.flatten
+  else
+    ["--color", "--debug", "--format", "s"]
+  end
+end
+def to_argument(line)
+  return line.chomp.split(" ") if line =~ /^(--format)/
+  return line.chomp
+end
+
+
 def rspec(file)
-  $spec_server.run(["--color", "--format", "s", file], STDERR, STDOUT)
+  $spec_server.run(config << file, STDERR, STDOUT)
 end
 
 puts <<DESC
