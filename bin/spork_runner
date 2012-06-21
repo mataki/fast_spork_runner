@@ -36,11 +36,15 @@ def to_argument(line)
   return line.chomp
 end
 
-
 def rspec(*files)
   files.each do |file|
     $spec_server.run(config << file, STDERR, STDOUT)
   end
+end
+alias spec rspec
+
+def all
+  "spec"
 end
 
 puts <<DESC
@@ -49,7 +53,8 @@ Example:
   > rspec 'spec/models/user_spec.rb'
   or
   > rspec 'spec/models/user_spec.rb', 'spec/models/membership_spec.rb'
-
+  or run all spec
+  > rspec all
 DESC
 
 IRB.start
